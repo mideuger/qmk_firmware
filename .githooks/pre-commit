@@ -1,0 +1,9 @@
+#!/usr/bin/env fish
+
+for line in (git diff --cached --name-status)
+    set file (echo $line | cut -f2)
+    if echo $file | grep "keymap.c" >> /dev/null
+        keymapviz -r $file
+        git add $file
+    end
+end
