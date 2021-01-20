@@ -51,8 +51,10 @@
 // #define EE_HANDS
 
 // https://precondition.github.io/home-row-mods#using-home-row-mods-with-qmk
-#define TAPPING_TERM 200
+#define TAPPING_TERM 170
 #define IGNORE_MOD_TAP_INTERRUPT
+#define TAPPING_FORCE_HOLD
+#define TAPPING_FORCE_HOLD_PER_KEY
 
 // Disable macro nesting to avoid recursive loops
 #define DYNAMIC_MACRO_NO_NESTING

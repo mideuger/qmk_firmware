@@ -200,7 +200,18 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 };
 
-rgblight_config_t rgblight_config;
+bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case LT(2,KC_BSPACE):
+        case LT(3,KC_DELETE):
+        case LT(3,KC_ENTER):
+        case LT(2,KC_SPACE):
+            return true;
+        default:
+            return false;
+    }
+}
+
 bool disable_layer_color = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
@@ -274,6 +285,8 @@ void matrix_scan_user(void) {
     }
     #endif
 }
+
+rgblight_config_t rgblight_config;
 
 uint32_t layer_state_set_user(uint32_t state) {
     uint8_t layer = biton32(state);
