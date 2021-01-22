@@ -58,3 +58,5 @@
 
 // Disable macro nesting to avoid recursive loops
 #define DYNAMIC_MACRO_NO_NESTING
+
+#define FORCE_NKRO

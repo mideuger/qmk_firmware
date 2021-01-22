@@ -1,10 +1,11 @@
-OLED_DRIVER_ENABLE = yes   # Enable OLED displays
-ENCODER_ENABLE = yes       # Enable encoders
-RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
-DYNAMIC_MACRO_ENABLE = yes # Enable dynamic macros
-MOUSEKEY_ENABLE = yes      # Enable mouse keys
-WPM_ENABLE = yes           # Enable word per minute calculations
-VELOCIKEY_ENABLE = yes     # Enable velocikey
+MAGIC_ENABLE = no
+BOOTMAGIC_ENABLE = lite
 
-# MAGIC_ENABLE = no
-# BOOTMAGIC_ENABLE = lite
+RGBLIGHT_ENABLE = yes
+VELOCIKEY_ENABLE = yes
+OLED_DRIVER_ENABLE = yes
+WPM_ENABLE = yes
+
+ENCODER_ENABLE = yes
+DYNAMIC_MACRO_ENABLE = yes
+MOUSEKEY_ENABLE = yes
