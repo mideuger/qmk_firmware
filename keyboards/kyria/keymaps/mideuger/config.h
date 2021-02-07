@@ -50,6 +50,8 @@
 // https://docs.qmk.fm/#/config_options?id=setting-handedness
 // #define EE_HANDS
 
+#define TAPPING_TOGGLE 1
+
 // https://precondition.github.io/home-row-mods#using-home-row-mods-with-qmk
 #define TAPPING_TERM 170
 #define IGNORE_MOD_TAP_INTERRUPT
