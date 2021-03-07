@@ -18,7 +18,7 @@
 
 #ifdef OLED_DRIVER_ENABLE
   #define OLED_DISPLAY_128X64
-  #define OLED_TIMEOUT 60000
+  #define OLED_TIMEOUT 63750
 #endif
 
 #ifdef RGBLIGHT_ENABLE
@@ -45,6 +45,13 @@
 #ifdef ENCODER_ENABLE
   #define ENCODER_DIRECTION_FLIP
   #define ENCODER_RESOLUTION 2
+#endif
+
+#ifdef MOUSEKEY_ENABLE
+  #define MOUSEKEY_DELAY 0
+  #define MOUSEKEY_INTERVAL 40
+  // #define MOUSEKEY_WHEEL_DELAY 0
+  // #define MOUSEKEY_WHEEL_INTERVAL 60
 #endif
 
 // If you are using an Elite C rev3 on the slave side, uncomment the lines below:
