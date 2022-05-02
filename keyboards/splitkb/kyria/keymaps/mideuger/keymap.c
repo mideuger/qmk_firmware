@@ -29,7 +29,6 @@ enum custom_keycodes {
     GREATER,
     DELAY,
     HRM,
-    KLAYER,
     CMD_TAB,
     ALT_TAB,
 };
@@ -69,12 +68,15 @@ enum custom_keycodes {
 /*
 * OSX action shortcuts
 */
+
 #define UNDO LGUI(KC_Z)
 #define CUT LGUI(KC_X)
 #define COPY LGUI(KC_C)
 #define PASTE LGUI(KC_V)
+
 #define FORCEQ LALT(LGUI(KC_ESCAPE))
 #define LOCKSCR LCTL(LGUI(KC_Q))
+
 #define PRTSCR1 LCTL(LGUI(LSFT(KC_3)))
 #define PRTSCR2 LCTL(LGUI(LSFT(KC_4)))
 #define PRTSCR3 LGUI(LSFT(KC_5))
@@ -129,7 +131,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB, KC_CIRC,   KC_AT, KC_HASH, KC_AMPR, KC_PERC,                                        KC_PGUP, KC_HOME,   KC_UP,  KC_END, XXXXXXX, XXXXXXX,
      KC_ESC, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, KC_MINS,                                        KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,   ARROW, KC_CAPS,
     KC_LSPO,    UNDO,     CUT,    COPY,   PASTE, KC_UNDS, XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,   LOWER, GREATER, KC_EXLM, KC_RSPC,
-                               XXXXXXX, ALT_TAB, CMD_TAB, KC_BSPC,  KC_DEL,     KC_ENT,  KC_SPC, XXXXXXX, XXXXXXX,  KLAYER
+                               XXXXXXX, ALT_TAB, CMD_TAB, KC_BSPC,  KC_DEL,     KC_ENT,  KC_SPC, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
  * | TAB  |      |      | LCBR | RCBR | DLR  |                              | MINS |  7   |  8   |  9   | SLSH | PERC |
@@ -146,7 +148,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_TAB, OCQUOTE, CCQUOTE, KC_LCBR, KC_RCBR,  KC_DLR,                                        KC_MINS,    KC_7,    KC_8,    KC_9, KC_SLSH, KC_PERC,
      KC_ESC, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT,    EURO,                                        KC_PLUS,    KC_4,    KC_5,    KC_6, KC_ASTR, XXXXXXX,
     KC_LSPO,ODCQUOTE, CDCQUOTE,KC_LBRC, KC_RBRC,   POUND,  XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX,   KC_0,    KC_1,    KC_2,    KC_3,  KC_EQL, KC_RSPC,
-                               XXXXXXX, XXXXXXX, XXXXXXX,  KC_BSPC,  KC_DEL,     KC_ENT,  KC_SPC, KC_DOT, KC_COMM,  KLAYER
+                               XXXXXXX, XXXXXXX, XXXXXXX,  KC_BSPC,  KC_DEL,     KC_ENT,  KC_SPC, KC_DOT, KC_COMM, XXXXXXX
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
  * |LOCKSC|      |      |DM_REC|DM_PLY|RGB_HU|                              |RGB_HU|  F7  |  F8  |  F9  | F10  |PRTSCR|
@@ -163,7 +165,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LOCKSCR, XXXXXXX, XXXXXXX, DM_REC1, DM_PLY1, RGB_VAD,                                         RGB_VAI,   KC_F7,   KC_F8,   KC_F9,  KC_F10, PRTSCR1,
      FORCEQ, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, RGB_HUD,                                         RGB_HUI,   KC_F4,   KC_F5,   KC_F6,  KC_F11, PRTSCR2,
       DELAY, XXXXXXX, XXXXXXX, DM_REC2, DM_PLY2,RGB_RMOD,  XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, RGB_MOD,   KC_F1,   KC_F2,   KC_F3,  KC_F12, PRTSCR3,
-                               XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, RGB_TOG,     HRM,  KLAYER
+                               XXXXXXX, XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,    XXXXXXX, XXXXXXX, RGB_TOG,     HRM, XXXXXXX
     ),
 };
 
@@ -182,37 +184,26 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
 }
 
 bool is_hrm_enabled = true;
-uint8_t kept_layer = 0;
 bool is_cmd_tab_active = false;
 bool is_alt_tab_active = false;
 uint16_t cmd_tab_timer = 0;
 uint16_t alt_tab_timer = 0;
 
-layer_state_t layer_state_set_user(layer_state_t state) {
-    uint8_t layer = get_highest_layer(state);
-    if (layer == _QWERTY || layer == _QWERTY_HRM) {
-        if (kept_layer != 0) {
-            return 1UL << kept_layer;
-        }
-    }
-    return state;
-}
-
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    #ifdef CONSOLE_ENABLE
-        if (record->event.pressed) {
-            uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
-                keycode,
-                record->event.key.row,
-                record->event.key.col,
-                get_highest_layer(layer_state),
-                record->event.pressed,
-                get_mods(),
-                get_oneshot_mods(),
-                record->tap.count
-            );
-        }
-    #endif
+    // #ifdef CONSOLE_ENABLE
+    //     if (record->event.pressed) {
+    //         uprintf("0x%04X,%u,%u,%u,%b,0x%02X,0x%02X,%u\n",
+    //             keycode,
+    //             record->event.key.row,
+    //             record->event.key.col,
+    //             get_highest_layer(layer_state),
+    //             record->event.pressed,
+    //             get_mods(),
+    //             get_oneshot_mods(),
+    //             record->tap.count
+    //         );
+    //     }
+    // #endif
     switch (keycode) {
         case ARROW:
             if (record->event.pressed) {
@@ -242,17 +233,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 layer_clear();
                 is_hrm_enabled = !is_hrm_enabled;
                 is_hrm_enabled ? default_layer_set(1UL << _QWERTY_HRM) : default_layer_set(1UL << _QWERTY);
-            }
-            return false;
-        case KLAYER:
-            if (record->event.pressed) {
-                uint8_t layer = get_highest_layer(layer_state);
-                if (kept_layer == layer) {
-                    kept_layer = 0;
-                } else {
-                    kept_layer = layer;
-                }
-                layer_clear();
             }
             return false;
         case CMD_TAB:
@@ -305,20 +285,14 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
         case _QWERTY:
             if (index == 0) {
                 clockwise ? tap_code(KC_MEDIA_NEXT_TRACK) : tap_code(KC_MEDIA_PREV_TRACK);
-            } else if (index == 1) {
+            } else {
                 clockwise ? tap_code(KC_AUDIO_VOL_UP) : tap_code(KC_AUDIO_VOL_DOWN);
             }
             break;
         case _NAV:
-            if (index == 0) {
-                clockwise ? tap_code(KC_RGHT) : tap_code(KC_LEFT);
-            } else if (index == 1) {
-                clockwise ? tap_code(KC_UP) : tap_code(KC_DOWN);
-            }
-            break;
-        case _NUM:
             clockwise ? tap_code16(LSFT(LGUI(KC_Z))) : tap_code16(LGUI(KC_Z));
             break;
+        case _NUM:
         case _FN:
             clockwise ? tap_code(KC_BRMU) : tap_code(KC_BRMD);
             break;
@@ -341,90 +315,9 @@ void dynamic_macro_record_end_user(int8_t direction) {
 
 #ifdef OLED_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-	return OLED_ROTATION_180;
+    return OLED_ROTATION_180;
 }
 
-#ifdef WPM_ENABLE
-uint16_t wpm_graph_timer = 0;
-
-static void render_wpm_graph(void) {
-    static uint8_t zero_bar_count = 0;
-    static uint8_t bar_count = 0;
-    uint8_t bar_height = 0;
-    uint8_t bar_segment = 0;
-
-    if (wpm_graph_timer == 0) {
-        wpm_graph_timer = timer_read();
-        return;
-    }
-    if (timer_elapsed(wpm_graph_timer) > 500) {
-        wpm_graph_timer = timer_read();
-
-        if (OLED_DISPLAY_HEIGHT == 64)
-            bar_height = get_current_wpm() / 2;
-        if (OLED_DISPLAY_HEIGHT == 32)
-            bar_height = get_current_wpm() / 4;
-        if (bar_height > OLED_DISPLAY_HEIGHT)
-            bar_height = OLED_DISPLAY_HEIGHT;
-
-        if (bar_height == 0) {
-            // keep track of how many zero bars we have drawn.  If
-            // there is a whole screen worth, turn the display off and
-            // wait until there is something to do
-            if (zero_bar_count > OLED_DISPLAY_WIDTH) {
-                oled_off();
-                return;
-            }
-            zero_bar_count++;
-        } else
-            zero_bar_count = 0;
-
-        oled_pan(false);
-        bar_count++;
-        for (uint8_t i = (OLED_DISPLAY_HEIGHT / 8); i > 0; i--) {
-            if (bar_height > 7) {
-                if (i % 2 == 1 && bar_count % 3 == 0)
-                    bar_segment = 254;
-                else
-                    bar_segment = 255;
-                bar_height -= 8;
-            } else {
-                switch (bar_height) {
-                    case 0:
-                        bar_segment = 0;
-                        break;
-                    case 1:
-                        bar_segment = 128;
-                        break;
-                    case 2:
-                        bar_segment = 192;
-                        break;
-                    case 3:
-                        bar_segment = 224;
-                        break;
-                    case 4:
-                        bar_segment = 240;
-                        break;
-                    case 5:
-                        bar_segment = 248;
-                        break;
-                    case 6:
-                        bar_segment = 252;
-                        break;
-                    case 7:
-                        bar_segment = 254;
-                        break;
-                }
-                bar_height = 0;
-
-                if (i % 2 == 1 && bar_count % 3 == 0)
-                    bar_segment++;
-            }
-            oled_write_raw_byte(bar_segment, (i - 1) * OLED_DISPLAY_WIDTH);
-        }
-    }
-}
-#else
 static void render_kyria_logo(void) {
     static const char PROGMEM kyria_logo[] = {
         0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,128,128,192,224,240,112,120, 56, 60, 28, 30, 14, 14, 14,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7,  7, 14, 14, 14, 30, 28, 60, 56,120,112,240,224,192,128,128,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -438,7 +331,6 @@ static void render_kyria_logo(void) {
     };
     oled_write_raw_P(kyria_logo, sizeof(kyria_logo));
 }
-#endif
 
 static void render_qmk_logo(void) {
     static const char PROGMEM qmk_logo[] = {
@@ -472,39 +364,31 @@ static void render_status(void) {
             break;
     }
 
-    led_t led_usb_state = host_keyboard_led_state();
-    oled_write_P(PSTR("CAPS: "), false);
-    oled_write_P(led_usb_state.caps_lock ? PSTR("on\n") : PSTR("off\n"), false);
+    // led_t led_usb_state = host_keyboard_led_state();
+    // oled_write_P(PSTR("CAPS: "), false);
+    // oled_write_P(led_usb_state.caps_lock ? PSTR("on\n") : PSTR("off\n"), false);
 
     oled_write_P(PSTR("HRM: "), false);
     oled_write_P(is_hrm_enabled ? PSTR("on\n") : PSTR("off\n"), false);
 
-    #ifdef WPM_ENABLE
-    static char wpm_str[5];
-    itoa(get_current_wpm(), wpm_str, 10);
-    oled_write_P(PSTR("WPM: "), false);
-    oled_write(wpm_str, false);
-    oled_write_P(PSTR("\n"), false);
+    #ifdef DYNAMIC_MACRO_ENABLE
+    oled_write_P(PSTR("REC: "), false);
+    oled_write_P(is_recording_dynamic_macro ? PSTR("on\n") : PSTR("off\n"), false);
     #endif
 
-    #ifdef DYNAMIC_MACRO_ENABLE
-    if (is_recording_dynamic_macro) {
-        oled_write_P(PSTR("                  REC"), false);
-    } else {
-        oled_write_P(PSTR("                     "), false);
-    }
-    #endif
+    uint8_t mods = get_mods() | get_weak_mods();
+    oled_write_P(PSTR("MODS: "), false);
+    oled_write_P((mods & MOD_MASK_CTRL) ? PSTR("C ") : PSTR("  "), false);
+    oled_write_P((mods & MOD_MASK_ALT) ? PSTR("A ") : PSTR("  "), false);
+    oled_write_P((mods & MOD_MASK_GUI) ? PSTR("G ") : PSTR("  "), false);
+    oled_write_P((mods & MOD_MASK_SHIFT) ? PSTR("S ") : PSTR("  "), false);
 }
 
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         render_status();
     } else {
-        #ifdef WPM_ENABLE
-        render_wpm_graph();
-        #else
         render_kyria_logo();
-        #endif
     }
 }
 #endif
