@@ -18,7 +18,7 @@
 
 #ifdef OLED_ENABLE
   #define OLED_DISPLAY_128X64
-  #define OLED_TIMEOUT 63750
+  // #define OLED_TIMEOUT 63750
 #endif
 
 #ifdef RGBLIGHT_ENABLE
@@ -48,19 +48,16 @@
 #endif
 
 #ifdef MOUSEKEY_ENABLE
-  #define MOUSEKEY_DELAY 0
-  #define MOUSEKEY_INTERVAL 40
+  // #define MOUSEKEY_DELAY 0
+  // #define MOUSEKEY_INTERVAL 40
   // #define MOUSEKEY_WHEEL_DELAY 0
   // #define MOUSEKEY_WHEEL_INTERVAL 60
 #endif
 
-// If you are using an Elite C rev3 on the slave side, uncomment the lines below:
-// #define NO_USB_STARTUP_CHECK
+// Disable macro nesting to avoid recursive loops
+#define DYNAMIC_MACRO_NO_NESTING
 
-// Allows to use either side as the master. Look at the documentation for info:
-// https://docs.qmk.fm/#/config_options?id=setting-handedness
-// #define EE_HANDS
-
+// Number of taps to activate tap actions
 #define TAPPING_TOGGLE 1
 
 // https://precondition.github.io/home-row-mods#using-home-row-mods-with-qmk
@@ -69,7 +66,12 @@
 #define TAPPING_FORCE_HOLD
 #define TAPPING_FORCE_HOLD_PER_KEY
 
-// Disable macro nesting to avoid recursive loops
-#define DYNAMIC_MACRO_NO_NESTING
+// https://github.com/andrewjrae/kyria-keymap
+#define CAPSWORD_USE_SHIFT
 
-#define FORCE_NKRO
+// https://docs.qmk.fm/#/squeezing_avr?id=squeezing-the-most-out-of-avr
+// Disable Lock Key
+#undef LOCKING_SUPPORT_ENABLE
+#undef LOCKING_RESYNC_ENABLE
+// Max 8 layers
+#define LAYER_STATE_8BIT

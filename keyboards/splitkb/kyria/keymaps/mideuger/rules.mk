@@ -1,7 +1,15 @@
 OLED_ENABLE = no
-OLED_DRIVER = SSD1306      # Enables the use of OLED displays
-ENCODER_ENABLE = yes       # Enables the use of one or more encoders
-RGBLIGHT_ENABLE = yes      # Enable keyboard RGB underglow
-SPACE_CADET_ENABLE = yes
+OLED_DRIVER = SSD1306
+ENCODER_ENABLE = yes
+RGBLIGHT_ENABLE = yes
+MOUSEKEY_ENABLE = no
 DYNAMIC_MACRO_ENABLE = yes
+SPACE_CADET_ENABLE = yes
+GRAVE_ESC_ENABLE = no
+WPM_ENABLE = no
 CONSOLE_ENABLE = yes
+MAGIC_ENABLE = no
+AVR_USE_MINIMAL_PRINTF = yes
+UNICODE_ENABLE = no
+
+SRC += features/casemodes.c
