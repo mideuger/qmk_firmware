@@ -15,6 +15,7 @@
  */
 #include QMK_KEYBOARD_H
 #include "features/casemodes.h"
+#include "features/modprint.h"
 
 #ifdef CONSOLE_ENABLE
 #include "print.h"
@@ -36,7 +37,8 @@ enum custom_keycodes {
     CMD_TAB,
     ALT_TAB,
     CAPSWORD,
-    XCASE
+    XCASE,
+    MODPRINT
 };
 
 /*
@@ -154,7 +156,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     LOCKSCR, XXXXXXX, XXXXXXX, DM_REC1, DM_PLY1, RGB_VAD,                                        RGB_VAI,   KC_F7,   KC_F8,   KC_F9,  KC_F10, PRTSCR1,
      FORCEQ, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, RGB_HUD,                                        RGB_HUI,   KC_F4,   KC_F5,   KC_F6,  KC_F11, PRTSCR2,
       DELAY, XXXXXXX, XXXXXXX, DM_REC2, DM_PLY2,RGB_RMOD,  XXXXXXX, XXXXXXX,  XXXXXXX, XXXXXXX,  RGB_MOD,   KC_F1,   KC_F2,   KC_F3,  KC_F12, PRTSCR3,
-                               XXXXXXX, XXXXXXX, RGB_TOG,  XXXXXXX, XXXXXXX,  XXXXXXX,   XCASE, CAPSWORD,    GAME, XXXXXXX
+                               XXXXXXX, XXXXXXX, RGB_TOG,  XXXXXXX, XXXXXXX, MODPRINT,   XCASE, CAPSWORD,    GAME, XXXXXXX
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
  * |      | TAB  |  Q   |  W   |  E   |  R   |                              |      |      |      |      |      |      |
@@ -198,10 +200,10 @@ bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
     }
 }
 
-bool is_cmd_tab_active = false;
-bool is_alt_tab_active = false;
-uint16_t cmd_tab_timer = 0;
-uint16_t alt_tab_timer = 0;
+static bool is_cmd_tab_active = false;
+static bool is_alt_tab_active = false;
+static uint16_t cmd_tab_timer = 0;
+static uint16_t alt_tab_timer = 0;
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     #ifdef CONSOLE_ENABLE
@@ -277,6 +279,15 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 enable_xcase();
             }
             return false;
+        case MODPRINT:
+            if (record->event.pressed) {
+                enable_mod_print();
+            }
+            return false;
+    }
+
+    if (!process_mod_print(keycode, record)) {
+        return false;
     }
 
     if (!process_case_modes(keycode, record)) {

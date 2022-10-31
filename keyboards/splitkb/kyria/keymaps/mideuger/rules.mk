@@ -13,3 +13,4 @@ AVR_USE_MINIMAL_PRINTF = yes
 UNICODE_ENABLE = no
 
 SRC += features/casemodes.c
+SRC += features/modprint.c

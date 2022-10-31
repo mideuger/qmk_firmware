@@ -276,4 +276,3 @@ bool process_case_modes(uint16_t keycode, const keyrecord_t *record) {
     }
     return true;
 }
-
