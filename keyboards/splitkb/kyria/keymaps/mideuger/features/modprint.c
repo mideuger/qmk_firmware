@@ -25,10 +25,12 @@ void enable_mod_print() {
 void tap_translated_keycode(uint16_t keycode) {
     switch (keycode) {
     case KC_A...KC_Z:
+        // Upper case letter.
         tap_code16(LSFT(keycode));
         break;
     case KC_F1...KC_F9:
-        SEND_STRING("F");
+        // Function keys from F1 to F9.
+        tap_code(KC_F);
         keycode = KC_1 + (keycode - KC_F1);
         tap_code(keycode);
         break;
@@ -87,10 +89,12 @@ void tap_translated_keycode(uint16_t keycode) {
         SEND_STRING(";;capslock");
         break;
     case KC_LSPO:
-        SEND_STRING("(");
+        // Opening parenthesis (space cadet shift).
+        tap_code16(LSFT(KC_9));
         break;
     case KC_RSPC:
-        SEND_STRING(")");
+        // Closing parenthesis (space cadet shift).
+        tap_code16(LSFT(KC_0));
         break;
     default:
         tap_code(keycode);
