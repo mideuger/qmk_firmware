@@ -317,6 +317,26 @@ void matrix_scan_user(void) {
     }
 }
 
+#ifdef DYNAMIC_MACRO_ENABLE
+bool is_recording_dynamic_macro = false;
+
+void dynamic_macro_record_start_user(void) {
+    is_recording_dynamic_macro = true;
+
+    #ifdef RGBLIGHT_LAYERS
+    rgblight_set_layer_state(2, is_recording_dynamic_macro);
+    #endif
+}
+
+void dynamic_macro_record_end_user(int8_t direction) {
+    is_recording_dynamic_macro = false;
+
+    #ifdef RGBLIGHT_LAYERS
+    rgblight_set_layer_state(2, is_recording_dynamic_macro);
+    #endif
+}
+#endif
+
 #ifdef ENCODER_ENABLE
 bool encoder_update_user(uint8_t index, bool clockwise) {
     switch (get_highest_layer(layer_state)) {
@@ -343,6 +363,38 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             break;
     }
     return true;
+}
+#endif
+
+#ifdef RGBLIGHT_LAYERS
+const rgblight_segment_t PROGMEM capslock_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 20, HSV_RED}
+);
+const rgblight_segment_t PROGMEM game_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 20, HSV_SPRINGGREEN}
+);
+const rgblight_segment_t PROGMEM macro_layer[] = RGBLIGHT_LAYER_SEGMENTS(
+    {0, 20, HSV_GOLD}
+);
+
+const rgblight_segment_t* const PROGMEM rgb_layers[] = RGBLIGHT_LAYERS_LIST(
+    capslock_layer,
+    game_layer,
+    macro_layer
+);
+
+void keyboard_post_init_user(void) {
+    rgblight_layers = rgb_layers;
+}
+
+bool led_update_user(led_t led_state) {
+    rgblight_set_layer_state(0, led_state.caps_lock);
+    return true;
+}
+
+layer_state_t layer_state_set_user(layer_state_t state) {
+    rgblight_set_layer_state(1, layer_state_cmp(state, _GAME));
+    return state;
 }
 #endif
 
@@ -373,18 +425,6 @@ static void render_qmk_logo(void) {
     };
     oled_write_P(qmk_logo, false);
 }
-
-#ifdef DYNAMIC_MACRO_ENABLE
-bool is_recording_dynamic_macro = false;
-
-void dynamic_macro_record_start_user(void) {
-    is_recording_dynamic_macro = true;
-}
-
-void dynamic_macro_record_end_user(int8_t direction) {
-    is_recording_dynamic_macro = false;
-}
-#endif
 
 static void render_status(void) {
     // QMK Logo and version information

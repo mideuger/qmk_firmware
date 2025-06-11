@@ -22,19 +22,24 @@
 #endif
 
 #ifdef RGBLIGHT_ENABLE
-  #define RGBLIGHT_ANIMATIONS
-  // #define RGBLIGHT_EFFECT_ALTERNATING
-  // #define RGBLIGHT_EFFECT_BREATHING
-  // #define RGBLIGHT_EFFECT_CHRISTMAS
-  // #define RGBLIGHT_EFFECT_KNIGHT
-  // #define RGBLIGHT_EFFECT_RAINBOW_MOOD
-  // #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
-  // #define RGBLIGHT_EFFECT_RGB_TEST
-  // #define RGBLIGHT_EFFECT_SNAKE
-  // #define RGBLIGHT_EFFECT_STATIC_GRADIENT
-  // #define RGBLIGHT_EFFECT_TWINKLE
+  #define RGBLIGHT_LAYERS
+  #define RGBLIGHT_LAYERS_RETAIN_VAL
+  // #define RGBLIGHT_LAYER_BLINK
+  
+  #define RGBLIGHT_EFFECT_ALTERNATING
+  #define RGBLIGHT_EFFECT_BREATHING
+  #define RGBLIGHT_EFFECT_CHRISTMAS
+  #define RGBLIGHT_EFFECT_KNIGHT
+  #define RGBLIGHT_EFFECT_RAINBOW_MOOD
+  #define RGBLIGHT_EFFECT_RAINBOW_SWIRL
+  #define RGBLIGHT_EFFECT_RGB_TEST
+  #define RGBLIGHT_EFFECT_SNAKE
+  #define RGBLIGHT_EFFECT_STATIC_GRADIENT
+  #define RGBLIGHT_EFFECT_TWINKLE
+
   // #define RBGLIGHT_LED_MAP {9,8,6,7,5,3,2,4,1,0,10,12,13,11,14,16,17,15,18,19} // Orients Kyria LEDs to a circle around both halves
   // #define RGBLIGHT_LED_MAP {0,1,2,9,8,7,4,3,5,6,19,18,17,10,11,12,15,16,14,13} // Orients Kyria LEDs for a left half-right half columnar progression
+
   #define RGBLIGHT_HUE_STEP 8
   #define RGBLIGHT_SAT_STEP 8
   #define RGBLIGHT_VAL_STEP 8
@@ -73,5 +78,12 @@
 // Disable Lock Key
 #undef LOCKING_SUPPORT_ENABLE
 #undef LOCKING_RESYNC_ENABLE
+
 // Max 8 layers
 #define LAYER_STATE_8BIT
+
+// This mirrors the master side matrix to the slave side for features that
+// react or require knowledge of master side key presses on the slave side.
+// The purpose of this feature is to support cosmetic use of key events
+// (e.g. RGB reacting to keypresses).
+#define SPLIT_LAYER_STATE_ENABLE
