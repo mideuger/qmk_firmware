@@ -88,11 +88,11 @@ void tap_translated_keycode(uint16_t keycode) {
     case KC_CAPS:
         SEND_STRING(";;capslock");
         break;
-    case KC_LSPO:
+    case SC_LSPO:
         // Opening parenthesis (space cadet shift).
         tap_code16(LSFT(KC_9));
         break;
-    case KC_RSPC:
+    case SC_RSPC:
         // Closing parenthesis (space cadet shift).
         tap_code16(LSFT(KC_0));
         break;

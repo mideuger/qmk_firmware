@@ -66,10 +66,8 @@
 #define TAPPING_TOGGLE 1
 
 // https://precondition.github.io/home-row-mods#using-home-row-mods-with-qmk
-#define TAPPING_TERM 170
-#define IGNORE_MOD_TAP_INTERRUPT
-#define TAPPING_FORCE_HOLD
-#define TAPPING_FORCE_HOLD_PER_KEY
+#define QUICK_TAP_TERM 170
+#define QUICK_TAP_TERM_PER_KEY
 
 // https://github.com/andrewjrae/kyria-keymap
 #define CAPSWORD_USE_SHIFT

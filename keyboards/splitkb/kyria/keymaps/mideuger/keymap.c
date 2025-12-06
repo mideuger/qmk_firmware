@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * | GRV  |HRM_A |HRM_S |HRM_D |HRM_F |  G   |                              |  H   |HRM_J |HRM_K |HRM_L |HRM_CO| QUOT |
  * |------+------+------+------+------+------+------+------.  ,------+------+------+------+------+------+------+------|
- * | LSPO |  Z   |  X   |  C   |  V   |  B   |      |      |  |      | GAME |  N   |  M   | COMM | DOT  | SLSH | RSPC |
+ * |SC_LSP|  Z   |  X   |  C   |  V   |  B   |      |      |  |      | GAME |  N   |  M   | COMM | DOT  | SLSH |SC_RSP|
  * `------+------+------+------+------+------+------+------.  ,------+------+------+------+------+------+------+------'
  *                      | MPLY | HYPR |CMD_TA|NAV_BS|FN_DEL|  |NUM_EN|NAV_SP|OSM_SF|ALT_TA| MUTE |
  *                      |      |      |      |      |      |  |      |      |      |      |      |
@@ -110,7 +110,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_QWERTY] = LAYOUT(
      KC_TAB,    KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                                            KC_Y,    KC_U,    KC_I,    KC_O,    KC_P, KC_BSLS,
      KC_GRV,   HRM_A,   HRM_S,   HRM_D,   HRM_F,    KC_G,                                            KC_H,   HRM_J,   HRM_K,   HRM_L, HRM_COL, KC_QUOT,
-    KC_LSPO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  XXXXXXX, XXXXXXX,    XXXXXXX,    GAME,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, KC_RSPC,
+    SC_LSPO,    KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,  XXXXXXX, XXXXXXX,    XXXXXXX,    GAME,    KC_N,    KC_M, KC_COMM,  KC_DOT, KC_SLSH, SC_RSPC,
                                KC_MPLY, KC_HYPR, CMD_TAB, NAV_BSPC,  FN_DEL,    NUM_ENT, NAV_SPC, OSM_SFT, ALT_TAB, KC_MUTE
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
@@ -118,7 +118,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
  * | ESC  | LCTL | LALT | LGUI | LSFT | MINS |                              | PGDN | LEFT | DOWN | RGHT |ARROW | CAPS |
  * |------+------+------+------+------+------+------+------.  ,------+------+------+------+------+------+------+------|
- * | LSPO | UNDO | CUT  | COPY |PASTE | UNDS |      |      |  |      | GAME |      |      |LOWER |GREATE| EXLM | RSPC |
+ * |SC_LSP| UNDO | CUT  | COPY |PASTE | UNDS |      |      |  |      | GAME |      |      |LOWER |GREATE| EXLM |SC_RSP|
  * `------+------+------+------+------+------+------+------.  ,------+------+------+------+------+------+------+------'
  *                      | MPLY |      |      | BSPC | DEL  |  | ENT  | SPC  |      |      | MUTE |
  *                      |      |      |      |      |      |  |      |      |      |      |      |
@@ -127,7 +127,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [_NAV] = LAYOUT(
      KC_TAB, KC_CIRC,   KC_AT, KC_HASH, KC_AMPR,  MIDDOT,                                        KC_PGUP, KC_HOME,   KC_UP,  KC_END, XXXXXXX, KC_PERC,
      KC_ESC, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, KC_MINS,                                        KC_PGDN, KC_LEFT, KC_DOWN, KC_RGHT,   ARROW, KC_CAPS,
-    KC_LSPO,    UNDO,     CUT,    COPY,   PASTE, KC_UNDS, XXXXXXX, XXXXXXX,    XXXXXXX,    GAME, XXXXXXX, XXXXXXX,   LOWER, GREATER, KC_EXLM, KC_RSPC,
+    SC_LSPO,    UNDO,     CUT,    COPY,   PASTE, KC_UNDS, XXXXXXX, XXXXXXX,    XXXXXXX,    GAME, XXXXXXX, XXXXXXX,   LOWER, GREATER, KC_EXLM, SC_RSPC,
                                KC_MPLY, XXXXXXX, XXXXXXX, KC_BSPC,  KC_DEL,     KC_ENT,  KC_SPC, XXXXXXX, XXXXXXX, KC_MUTE
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
@@ -148,21 +148,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
                                XXXXXXX, XXXXXXX, XXXXXXX,  KC_BSPC,  KC_DEL,     KC_ENT,  KC_SPC, XXXXXXX, XXXXXXX, XXXXXXX
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
- * |LOCKSC|      |      |DM_REC|DM_PLY|RGB_VA|                              |RGB_VA|  F7  |  F8  |  F9  | F10  |PRTSCR|
+ * |LOCKSC|      |      |DM_REC|DM_PLY|UG_VAL|                              |UG_VAL|  F7  |  F8  |  F9  | F10  |PRTSCR|
  * |------+------+------+------+------+------|                              |------+------+------+------+------+------|
- * |FORCEQ| LCTL | LALT | LGUI | LSFT |RGB_HU|                              |RGB_HU|  F4  |  F5  |  F6  | F11  |PRTSCR|
+ * |FORCEQ| LCTL | LALT | LGUI | LSFT |UG_HUE|                              |UG_HUE|  F4  |  F5  |  F6  | F11  |PRTSCR|
  * |------+------+------+------+------+------+------+------.  ,------+------+------+------+------+------+------+------|
- * |DELAY |      |      |DM_REC|DM_PLY|RGB_RM|      |      |  |      | GAME |RGB_MO|  F1  |  F2  |  F3  | F12  |PRTSCR|
+ * |DELAY |      |      |DM_REC|DM_PLY|UG_PRE|      |      |  |      | GAME |UG_NEX|  F1  |  F2  |  F3  | F12  |PRTSCR|
  * `------+------+------+------+------+------+------+------.  ,------+------+------+------+------+------+------+------'
- *                      |      |      |RGB_TO|      |      |  |MODPRI|XCASE |CAPSWO|      |      |
+ *                      |      |      |UG_TOG|      |      |  |MODPRI|XCASE |CAPSWO|      |      |
  *                      |      |      |      |      |      |  |      |      |      |      |      |
  *                      `----------------------------------'  `----------------------------------'
  *                                                                               generated by [keymapviz] */
     [_FN] = LAYOUT(
-    LOCKSCR, XXXXXXX, XXXXXXX, DM_REC1, DM_PLY1, RGB_VAD,                                        RGB_VAI,   KC_F7,   KC_F8,   KC_F9,  KC_F10, PRTSCR1,
-     FORCEQ, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, RGB_HUD,                                        RGB_HUI,   KC_F4,   KC_F5,   KC_F6,  KC_F11, PRTSCR2,
-      DELAY, XXXXXXX, XXXXXXX, DM_REC2, DM_PLY2,RGB_RMOD,  XXXXXXX, XXXXXXX,  XXXXXXX,    GAME,  RGB_MOD,   KC_F1,   KC_F2,   KC_F3,  KC_F12, PRTSCR3,
-                               XXXXXXX, XXXXXXX, RGB_TOG,  XXXXXXX, XXXXXXX, MODPRINT,   XCASE, CAPSWORD, XXXXXXX, XXXXXXX
+    LOCKSCR, XXXXXXX, XXXXXXX, DM_REC1, DM_PLY1, UG_VALD,                                        UG_VALU,   KC_F7,   KC_F8,   KC_F9,  KC_F10, PRTSCR1,
+     FORCEQ, KC_LCTL, KC_LALT, KC_LGUI, KC_LSFT, UG_HUED,                                        UG_HUEU,   KC_F4,   KC_F5,   KC_F6,  KC_F11, PRTSCR2,
+      DELAY, XXXXXXX, XXXXXXX, DM_REC2, DM_PLY2, UG_PREV,  XXXXXXX, XXXXXXX,  XXXXXXX,    GAME,  UG_NEXT,   KC_F1,   KC_F2,   KC_F3,  KC_F12, PRTSCR3,
+                               XXXXXXX, XXXXXXX, UG_TOGG,  XXXXXXX, XXXXXXX, MODPRINT,   XCASE, CAPSWORD, XXXXXXX, XXXXXXX
     ),
 /* ,-----------------------------------------.                              ,-----------------------------------------.
  * | TAB  |  T   |  Q   |  W   |  E   |  R   |                              |  Y   |  U   |  I   |  O   |  P   | BSLS |
@@ -192,16 +192,16 @@ bool use_default_xcase_separator(uint16_t keycode, const keyrecord_t *record) {
     return false;
 }
 
-bool get_tapping_force_hold(uint16_t keycode, keyrecord_t *record) {
+uint16_t get_quick_tap_term(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case NAV_BSPC:
         case FN_DEL:
         case NUM_ENT:
         case NAV_SPC:
         case HRM_L:
-            return true;
+            return 0;
         default:
-            return false;
+            return QUICK_TAP_TERM;
     }
 }
 
@@ -320,20 +320,24 @@ void matrix_scan_user(void) {
 #ifdef DYNAMIC_MACRO_ENABLE
 bool is_recording_dynamic_macro = false;
 
-void dynamic_macro_record_start_user(void) {
+bool dynamic_macro_record_start_user(int8_t directions) {
     is_recording_dynamic_macro = true;
 
     #ifdef RGBLIGHT_LAYERS
     rgblight_set_layer_state(2, is_recording_dynamic_macro);
     #endif
+
+    return true;
 }
 
-void dynamic_macro_record_end_user(int8_t direction) {
+bool dynamic_macro_record_end_user(int8_t direction) {
     is_recording_dynamic_macro = false;
 
     #ifdef RGBLIGHT_LAYERS
     rgblight_set_layer_state(2, is_recording_dynamic_macro);
     #endif
+
+    return true;
 }
 #endif
 
@@ -350,9 +354,9 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             break;
         case _NAV:
             if (index == 0) {
-                clockwise ? tap_code(KC_MS_WH_RIGHT) : tap_code(KC_MS_WH_LEFT);
+                clockwise ? tap_code(QK_MOUSE_WHEEL_RIGHT) : tap_code(QK_MOUSE_WHEEL_LEFT);
             } else {
-                clockwise ? tap_code(KC_MS_WH_UP) : tap_code(KC_MS_WH_DOWN);
+                clockwise ? tap_code(QK_MOUSE_WHEEL_UP) : tap_code(QK_MOUSE_WHEEL_DOWN);
             }
             break;
         case _NUM:
@@ -362,7 +366,7 @@ bool encoder_update_user(uint8_t index, bool clockwise) {
             clockwise ? tap_code(KC_BRMU) : tap_code(KC_BRMD);
             break;
     }
-    return true;
+    return false;
 }
 #endif
 
